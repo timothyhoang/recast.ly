@@ -3,12 +3,35 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      selected: 0
+      selected: 0,
+      videos: exampleVideoData
     };
   }
   
+  search(query) {
+    $.ajax({
+      type: 'GET',
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      data: {
+        key: 'AIzaSyACw-T2SrOBq1lFNkvLUAKrhOlqpJDpMmc',
+        maxResults: 5,
+        q: query,
+        type: 'video',
+        part: 'snippet',
+        videoEmbeddable: true
+      },
+      success: (response) => {
+        this.setState({
+          videos: response.items
+        });
+      },
+      error: function() {
+        console.log('Fail');
+      }
+    });
+  }
+  
   onSelect(i) {
-    console.log(i);
     this.setState({
       selected: i
     }); 
@@ -19,15 +42,15 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search search={this.search.bind(this)}/>
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.props.videos[this.state.selected]}/>
+            <VideoPlayer video={this.state.videos[this.state.selected]}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.props.videos} select={this.onSelect.bind(this)}/>
+            <VideoList videos={this.state.videos} select={this.onSelect.bind(this)}/>
           </div>
         </div>
       </div>
@@ -40,6 +63,6 @@ class App extends React.Component {
 window.App = App;
 
 ReactDOM.render(
-  <App videos={exampleVideoData}/>,
+  <App />,
   document.getElementById('app')  
 );
