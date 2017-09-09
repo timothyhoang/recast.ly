@@ -4,10 +4,11 @@ class Search extends React.Component {
   }
   
   render() {
+    var handleSearch = () => { this.props.search($('.form-control').val()); };
     return (
       <div className="search-bar form-inline">
-        <input className="form-control" type="text" />
-        <button className="btn hidden-sm-down" onClick={() => { this.props.search($('.form-control').val()); }}>
+        <input className="form-control" type="text" onKeyUp= {(event) => { if (event.keyCode === 13) { handleSearch(); } }}/>
+        <button className="btn hidden-sm-down" onClick={handleSearch}>
           <span className="glyphicon glyphicon-search"></span>
         </button>
       </div>
