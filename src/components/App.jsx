@@ -4,31 +4,8 @@ class App extends React.Component {
     
     this.state = {
       selected: 0,
-      videos: exampleVideoData
+      videos: searchYouTube(undefined, this.updateVideos.bind(this))
     };
-  }
-  
-  search(query) {
-    $.ajax({
-      type: 'GET',
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      data: {
-        key: 'AIzaSyACw-T2SrOBq1lFNkvLUAKrhOlqpJDpMmc',
-        maxResults: 5,
-        q: query,
-        type: 'video',
-        part: 'snippet',
-        videoEmbeddable: true
-      },
-      success: (response) => {
-        this.setState({
-          videos: response.items
-        });
-      },
-      error: function() {
-        console.log('Fail');
-      }
-    });
   }
   
   onSelect(i) {
@@ -36,25 +13,35 @@ class App extends React.Component {
       selected: i
     }); 
   }
+  
+  updateVideos(videos) {
+    this.setState({
+      videos: videos
+    });
+  }
 
   render() {
-    return (
-      <div>
-        <nav className="navbar">
-          <div className="col-md-6 offset-md-3">
-            <Search search={this.search.bind(this)}/>
-          </div>
-        </nav>
-        <div className="row">
-          <div className="col-md-7">
-            <VideoPlayer video={this.state.videos[this.state.selected]}/>
-          </div>
-          <div className="col-md-5">
-            <VideoList videos={this.state.videos} select={this.onSelect.bind(this)}/>
+    if (this.state.videos) {
+      return (
+        <div>
+          <nav className="navbar">
+            <div className="col-md-6 offset-md-3">
+              <Search updateVideos={this.updateVideos.bind(this)} />
+            </div>
+          </nav>
+          <div className="row">
+            <div className="col-md-7">
+              <VideoPlayer video={this.state.videos[this.state.selected]}/>
+            </div>
+            <div className="col-md-5">
+              <VideoList videos={this.state.videos} select={this.onSelect.bind(this)}/>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (<div></div>);
+    }
   }
 }
 
@@ -62,7 +49,3 @@ class App extends React.Component {
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')  
-);

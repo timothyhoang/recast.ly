@@ -1,10 +1,24 @@
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.options = {
+      key: 'AIzaSyACw-T2SrOBq1lFNkvLUAKrhOlqpJDpMmc',
+      maxResults: 5,
+      q: undefined,
+      type: 'video',
+      part: 'snippet',
+      videoEmbeddable: true
+    };
   }
   
   render() {
-    var handleSearch = () => { this.props.search($('.form-control').val()); };
+    var handleSearch = () => { 
+      var query = $('.form-control').val();
+      this.options['q'] = query;
+      searchYouTube(this.options, this.props.updateVideos);
+    };
+    
     return (
       <div className="search-bar form-inline">
         <input className="form-control" type="text" onKeyUp= {(event) => { if (event.keyCode === 13) { handleSearch(); } }}/>
