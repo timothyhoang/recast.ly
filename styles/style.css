@@ -99,3 +99,17 @@ h5 {
     margin-right: 20px;
   }
 }
+
+.likes, .dislikes {
+  float: right;
+  padding: 0 5px;
+}
+
+.statistics {
+  padding: 5px 0;
+  font-size: 12px
+}
+
+#video-player-details .statistics {
+  font-size: 20px  
+}

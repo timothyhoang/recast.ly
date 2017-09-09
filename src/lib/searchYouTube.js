@@ -7,10 +7,10 @@ const defaultSearch = {
   videoEmbeddable: true
 };
 
-var searchYouTube = (options = defaultSearch, callback) => {
+var searchYouTube = (options = defaultSearch, callback, endpoint = 'search') => {
   $.ajax({
     type: 'GET',
-    url: 'https://www.googleapis.com/youtube/v3/search',
+    url: `https://www.googleapis.com/youtube/v3/${endpoint}`,
     data: options,
     success: function(response) {
       callback(response.items);

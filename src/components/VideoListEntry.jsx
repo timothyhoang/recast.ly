@@ -7,8 +7,9 @@ var VideoListEntry = (props) => {
         <img className="media-object" onClick={handleClick} src={props.video.snippet.thumbnails.default.url} alt="" />
       </div>
       <div className="media-body">
-        <div className="video-list-entry-title" onClick={handleClick}>{props.video.snippet.title}</div>
-        <div className="video-list-entry-detail">{props.video.snippet.description}</div>
+        <div className="video-player-details">
+          <VideoDetails details={props.video} handleClick={handleClick} />
+        </div>
       </div>
     </div>
   );

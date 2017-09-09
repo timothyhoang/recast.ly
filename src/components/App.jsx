@@ -31,10 +31,10 @@ class App extends React.Component {
           </nav>
           <div className="row">
             <div className="col-md-7">
-              <VideoPlayer video={this.state.videos[this.state.selected]}/>
+              <VideoPlayer video={this.state.videos[this.state.selected]} />
             </div>
             <div className="col-md-5">
-              <VideoList videos={this.state.videos} select={this.onSelect.bind(this)}/>
+              <VideoList videos={this.state.videos} select={this.onSelect.bind(this)} />
             </div>
           </div>
         </div>
